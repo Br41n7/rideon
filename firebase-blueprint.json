@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Information about a student rider, driver, or admin.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["rider", "driver", "admin"] },
+        "verified": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "studentIdUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "email", "role", "verified"]
+    },
+    "Driver": {
+      "title": "Driver",
+      "description": "Driver-specific information and availability.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "vehicleInfo": { "type": "string" },
+        "isAvailable": { "type": "boolean" },
+        "currentLocation": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "vehicleInfo", "isAvailable"]
+    },
+    "Ride": {
+      "title": "Ride",
+      "description": "A ride request and trip information.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "riderId": { "type": "string" },
+        "driverId": { "type": "string" },
+        "pickupLocation": {
+          "type": "object",
+          "properties": {
+            "address": { "type": "string" },
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "destination": {
+          "type": "object",
+          "properties": {
+            "address": { "type": "string" },
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "status": { "type": "string", "enum": ["pending", "accepted", "ongoing", "completed", "cancelled"] },
+        "fare": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["cash", "wallet"] },
+        "riderRating": { "type": "number" },
+        "driverRating": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["riderId", "pickupLocation", "destination", "status", "fare", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/drivers/{userId}": {
+      "schema": "Driver",
+      "description": "Driver-specific status and location"
+    },
+    "/rides/{rideId}": {
+      "schema": "Ride",
+      "description": "Ride trips"
+    }
+  }
+}

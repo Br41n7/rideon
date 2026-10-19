@@ -1,0 +1,6 @@
+{
+  "name": "RideOn",
+  "description": "A campus-focused ride-hailing platform designed specifically for students to request rides, track drivers in real-time, and pay digitally.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": []
+}
