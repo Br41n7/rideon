@@ -23,36 +23,35 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
-    function isEmailVerified() {
-      // For mock users (anonymous), we don't have email_verified in the token
-      return request.auth.token.email_verified == true || request.auth.token.firebase.sign_in_provider == 'anonymous';
-    }
-
-    function isValidId(id) {
-      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
-    }
-
     // User Rules
     match /users/{userId} {
-      allow get: if isSignedIn();
-      allow list: if isAdmin();
-      allow create: if isSignedIn(); // Allow creation if signed in (anonymous or other)
-      allow update: if isAdmin() || isOwner(userId);
+      allow get: if true;
+      allow list: if true;
+      allow create: if true;
+      allow update: if true;
       allow delete: if isAdmin();
     }
 
     // Driver Rules
     match /drivers/{userId} {
-      allow read: if true; // Allow anyone to see available drivers for the demo
-      allow write: if isAdmin() || isOwner(userId);
+      allow read: if true;
+      allow write: if true;
     }
 
     // Ride Rules
     match /rides/{rideId} {
-      allow create: if isSignedIn(); 
-      allow get: if true; // Relax for demo
-      allow list: if true; // Relax for demo to allow drivers to see pending rides without complex filter satisfaction in rules
-      allow update: if isSignedIn(); // Relax for demo
+      allow create: if true;
+      allow get: if true;
+      allow list: if true;
+      allow update: if true;
+      allow delete: if isAdmin();
+    }
+
+    // Review Rules
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if true;
       allow delete: if isAdmin();
     }
   }

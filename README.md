@@ -54,6 +54,7 @@ CampusRide solves this by creating a **closed-loop campus transit ecosystem**:
 | **Rider Experience (`/app/rider`)** | ✅ Complete | Interactive campus map, simulated or customized pickup & drop-off pins, upfront fare calculation, instant request dispatching, and live ride status tracking (`pending` → `accepted` → `ongoing` → `completed`). |
 | **Driver Experience (`/app/driver`)** | ✅ Complete | Real-time shift status toggle (Online/Offline), live driver pool sync, instant pending ride request alerts, one-click accept, and trip progression controls. |
 | **Administrative Hub (`/app/admin`)** | ✅ Complete | Protected console for system administrators (`iyanuolalegan@gmail.com`), real-time user directory, verification badge toggles, ride history auditing, user deletion, and Recharts analytics. |
+| **Post-Ride Rating & Review System** | ✅ Complete | 5-Star rating system with contextual praise/critical tags, written feedback, and urgent safety/conduct reporting for both riders and drivers. Integrated into Admin Safety Hub with incident workflow controls. |
 | **Database & Realtime Sync** | ✅ Complete | Firebase Firestore reactive listeners (`onSnapshot`) ensuring sub-second updates across riders, drivers, and the administration console. |
 | **Security Rules** | ✅ Complete | Production `firestore.rules` enforcing role-based authorization, owner write restrictions, and administrative overrides. |
 | **Fullstack Backend** | ✅ Complete | Express.js proxy server with Vite SPA dev middleware integration (`server.ts`) for production Cloud Run deployment. |

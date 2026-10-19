@@ -11,6 +11,8 @@
         "role": { "type": "string", "enum": ["rider", "driver", "admin"] },
         "verified": { "type": "boolean" },
         "rating": { "type": "number" },
+        "totalRatings": { "type": "number" },
+        "safetyReportsCount": { "type": "number" },
         "studentIdUrl": { "type": "string" },
         "createdAt": { "type": "string", "format": "date-time" }
       },
@@ -24,6 +26,8 @@
         "userId": { "type": "string" },
         "vehicleInfo": { "type": "string" },
         "isAvailable": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "totalTrips": { "type": "number" },
         "currentLocation": {
           "type": "object",
           "properties": {
@@ -42,7 +46,9 @@
       "properties": {
         "id": { "type": "string" },
         "riderId": { "type": "string" },
+        "riderName": { "type": "string" },
         "driverId": { "type": "string" },
+        "driverName": { "type": "string" },
         "pickupLocation": {
           "type": "object",
           "properties": {
@@ -63,11 +69,44 @@
         "fare": { "type": "number" },
         "paymentMethod": { "type": "string", "enum": ["cash", "wallet"] },
         "riderRating": { "type": "number" },
+        "riderReview": { "type": "string" },
+        "riderTags": { "type": "array", "items": { "type": "string" } },
+        "riderReportedSafety": { "type": "boolean" },
+        "riderReviewedAt": { "type": "string", "format": "date-time" },
         "driverRating": { "type": "number" },
+        "driverReview": { "type": "string" },
+        "driverTags": { "type": "array", "items": { "type": "string" } },
+        "driverReportedSafety": { "type": "boolean" },
+        "driverReviewedAt": { "type": "string", "format": "date-time" },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
       "required": ["riderId", "pickupLocation", "destination", "status", "fare", "createdAt"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Post-ride rating, feedback tags, and safety report for riders and drivers.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "rideId": { "type": "string" },
+        "reviewerId": { "type": "string" },
+        "reviewerName": { "type": "string" },
+        "reviewerRole": { "type": "string", "enum": ["rider", "driver"] },
+        "targetUserId": { "type": "string" },
+        "targetUserName": { "type": "string" },
+        "rating": { "type": "number" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "comment": { "type": "string" },
+        "isSafetyReport": { "type": "boolean" },
+        "safetyCategory": { "type": "string" },
+        "safetyDetails": { "type": "string" },
+        "safetyStatus": { "type": "string", "enum": ["open", "investigating", "resolved"] },
+        "pickupAddress": { "type": "string" },
+        "destinationAddress": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["rideId", "reviewerId", "reviewerRole", "targetUserId", "rating", "createdAt"]
     }
   },
   "firestore": {
@@ -82,6 +121,10 @@
     "/rides/{rideId}": {
       "schema": "Ride",
       "description": "Ride trips"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Post-ride rating and safety reviews"
     }
   }
 }
